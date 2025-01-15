@@ -19,8 +19,11 @@ export default async function CryptoDetails({ params }: any) {
   const crypto = await fetchCryptoDetails(params.id);
 
   return (
-    <div>
-      <h1>{crypto.name}</h1>
+    <div className="details-container">
+        <div className="details-header">
+            <h1>{crypto.name}</h1>
+        </div>
+      
       <p>{crypto.description?.en || 'No description available.'}</p>
       <p>Current Price: ${crypto.current_price}</p>
     </div>
