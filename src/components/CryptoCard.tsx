@@ -1,30 +1,31 @@
 'use client';
 
-import { useFavorites } from "@/store/FavoritesContext";
-import { Crypto } from "@/types/crypto";
-import { Crimson_Pro } from "next/font/google";
+import { useFavorites } from '../store/FavoritesContext';
+import { Crypto } from '../types/crypto';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
-export default function CryptoCard({ crypto }: {crypto: Crypto}) {
-    const { favorites, addFavorite, removeFavorite} = useFavorites();
+export default function CryptoCard({ crypto }: { crypto: Crypto }) {
+  const { favorites, addFavorite, removeFavorite } = useFavorites();
 
-    const isFavorite = favorites.includes(crypto.id);
+  const isFavorite = favorites.includes(crypto.id);
 
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      removeFavorite(crypto.id);
+    } else {
+      addFavorite(crypto.id);
+    }
+  };
 
-    const toggleFavorite = () => {
-        if (isFavorite) {
-            removeFavorite(crypto.id);
-        } else  {
-            addFavorite(crypto.id);
-        }
-    };
-
-    return (
-        <div>
-            <h2>{crypto.name}</h2>
-            <p>Price: ${crypto.current_price}</p>
-            <button onClick={toggleFavorite}>
-                {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-            </button>
-        </div>
-    )
+  return (
+    <div className={`card ${isFavorite ? 'favorite' : ''}`}>
+      <h2>{crypto.name}</h2>
+      <p>Price: ${crypto.current_price}</p>
+      <div>
+        <span onClick={toggleFavorite} className="icon">
+          {isFavorite ? <AiFillStar /> : <AiOutlineStar />}
+        </span>
+      </div>
+    </div>
+  );
 }
